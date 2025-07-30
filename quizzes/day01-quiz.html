@@ -1,47 +1,434 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>CSA Day 1 Quiz</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 40px; background: #f9f9f9; }
-        h1 { color: #333; }
-        .question { margin-bottom: 20px; padding: 15px; background: #fff; border: 1px solid #ccc; border-radius: 8px; }
-        .correct { color: green; font-weight: bold; }
-        .incorrect { color: red; font-weight: bold; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Day 1 CSA Quiz - One by One</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f7f9;
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+    .question-container {
+      display: none;
+      margin-bottom: 30px;
+    }
+    .question-container.active {
+      display: block;
+    }
+    .question {
+      font-weight: bold;
+    }
+    .options label {
+      display: block;
+      margin: 8px 0;
+      cursor: pointer;
+    }
+    .feedback {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    .correct {
+      color: green;
+    }
+    .incorrect {
+      color: red;
+    }
+    .navigation {
+      margin-top: 20px;
+    }
+    button {
+      padding: 8px 16px;
+      margin: 0 4px;
+    }
+  </style>
 </head>
 <body>
-    <h1>CSA Day 1 Quiz - 30 Scenario-Based Questions</h1>
-    <form id="quizForm">
-<div class="question"><p><strong>Q1. What is the primary purpose of an update set in ServiceNow?</strong></p><label><input type="radio" name="q0" value="0"> To back up the instance data</label><br><label><input type="radio" name="q0" value="1"> To apply system patches from ServiceNow</label><br><label><input type="radio" name="q0" value="2"> To group a series of customizations for migration between instances</label><br><label><input type="radio" name="q0" value="3"> To delete unused data from tables</label><br><p id="feedback0"></p></div><div class="question"><p><strong>Q2. Which module allows an admin to view all customizations captured in an update set?</strong></p><label><input type="radio" name="q1" value="0"> System Definition > Tables</label><br><label><input type="radio" name="q1" value="1"> System Update Sets > Retrieved Update Sets</label><br><label><input type="radio" name="q1" value="2"> System Update Sets > Local Update Sets</label><br><label><input type="radio" name="q1" value="3"> System Logs > All Updates</label><br><p id="feedback1"></p></div><div class="question"><p><strong>Q3. What happens if two update sets contain a change to the same record?</strong></p><label><input type="radio" name="q2" value="0"> Both are merged automatically</label><br><label><input type="radio" name="q2" value="1"> The latest one overrides the earlier one</label><br><label><input type="radio" name="q2" value="2"> The first one always takes precedence</label><br><label><input type="radio" name="q2" value="3"> A merge conflict is detected and must be resolved manually</label><br><p id="feedback2"></p></div><div class="question"><p><strong>Q4. Sample Question 4: What does XYZ mean in ServiceNow?</strong></p><label><input type="radio" name="q3" value="0"> Option A</label><br><label><input type="radio" name="q3" value="1"> Option B</label><br><label><input type="radio" name="q3" value="2"> Option C</label><br><label><input type="radio" name="q3" value="3"> Option D</label><br><p id="feedback3"></p></div><div class="question"><p><strong>Q5. Sample Question 5: What does XYZ mean in ServiceNow?</strong></p><label><input type="radio" name="q4" value="0"> Option A</label><br><label><input type="radio" name="q4" value="1"> Option B</label><br><label><input type="radio" name="q4" value="2"> Option C</label><br><label><input type="radio" name="q4" value="3"> Option D</label><br><p id="feedback4"></p></div><div class="question"><p><strong>Q6. Sample Question 6: What does XYZ mean in ServiceNow?</strong></p><label><input type="radio" name="q5" value="0"> Option A</label><br><label><input type="radio" name="q5" value="1"> Option B</label><br><label><input type="radio" name="q5" value="2"> Option C</label><br><label><input type="radio" name="q5" value="3"> Option D</label><br><p id="feedback5"></p></div><div class="question"><p><strong>Q7. Sample Question 7: What does XYZ mean in ServiceNow?</strong></p><label><input type="radio" name="q6" value="0"> Option A</label><br><label><input type="radio" name="q6" value="1"> Option B</label><br><label><input type="radio" name="q6" value="2"> Option C</label><br><label><input type="radio" name="q6" value="3"> Option D</label><br><p id="feedback6"></p></div><div class="question"><p><strong>Q8. Sample Question 8: What does XYZ mean in ServiceNow?</strong></p><label><input type="radio" name="q7" value="0"> Option A</label><br><label><input type="radio" name="q7" value="1"> Option B</label><br><label><input type="radio" name="q7" value="2"> Option C</label><br><label><input type="radio" name="q7" value="3"> Option D</label><br><p id="feedback7"></p></div><div class="question"><p><strong>Q9. Sample Question 9: What does XYZ mean in ServiceNow?</strong></p><label><input type="radio" name="q8" value="0"> Option A</label><br><label><input type="radio" name="q8" value="1"> Option B</label><br><label><input type="radio" name="q8" value="2"> Option C</label><br><label><input type="radio" name="q8" value="3"> Option D</label><br><p id="feedback8"></p></div><div class="question"><p><strong>Q10. Sample Question 10: What does XYZ mean in ServiceNow?</strong></p><label><input type="radio" name="q9" value="0"> Option A</label><br><label><input type="radio" name="q9" value="1"> Option B</label><br><label><input type="radio" name="q9" value="2"> Option C</label><br><label><input type="radio" name="q9" value="3"> Option D</label><br><p id="feedback9"></p></div><div class="question"><p><strong>Q11. Sample Question 11: What does XYZ mean in ServiceNow?</strong></p><label><input type="radio" name="q10" value="0"> Option A</label><br><label><input type="radio" name="q10" value="1"> Option B</label><br><label><input type="radio" name="q10" value="2"> Option C</label><br><label><input type="radio" name="q10" value="3"> Option D</label><br><p id="feedback10"></p></div><div class="question"><p><strong>Q12. Sample Question 12: What does XYZ mean in ServiceNow?</strong></p><label><input type="radio" name="q11" value="0"> Option A</label><br><label><input type="radio" name="q11" value="1"> Option B</label><br><label><input type="radio" name="q11" value="2"> Option C</label><br><label><input type="radio" name="q11" value="3"> Option D</label><br><p id="feedback11"></p></div><div class="question"><p><strong>Q13. Sample Question 13: What does XYZ mean in ServiceNow?</strong></p><label><input type="radio" name="q12" value="0"> Option A</label><br><label><input type="radio" name="q12" value="1"> Option B</label><br><label><input type="radio" name="q12" value="2"> Option C</label><br><label><input type="radio" name="q12" value="3"> Option D</label><br><p id="feedback12"></p></div><div class="question"><p><strong>Q14. Sample Question 14: What does XYZ mean in ServiceNow?</strong></p><label><input type="radio" name="q13" value="0"> Option A</label><br><label><input type="radio" name="q13" value="1"> Option B</label><br><label><input type="radio" name="q13" value="2"> Option C</label><br><label><input type="radio" name="q13" value="3"> Option D</label><br><p id="feedback13"></p></div><div class="question"><p><strong>Q15. Sample Question 15: What does XYZ mean in ServiceNow?</strong></p><label><input type="radio" name="q14" value="0"> Option A</label><br><label><input type="radio" name="q14" value="1"> Option B</label><br><label><input type="radio" name="q14" value="2"> Option C</label><br><label><input type="radio" name="q14" value="3"> Option D</label><br><p id="feedback14"></p></div><div class="question"><p><strong>Q16. Sample Question 16: What does XYZ mean in ServiceNow?</strong></p><label><input type="radio" name="q15" value="0"> Option A</label><br><label><input type="radio" name="q15" value="1"> Option B</label><br><label><input type="radio" name="q15" value="2"> Option C</label><br><label><input type="radio" name="q15" value="3"> Option D</label><br><p id="feedback15"></p></div><div class="question"><p><strong>Q17. Sample Question 17: What does XYZ mean in ServiceNow?</strong></p><label><input type="radio" name="q16" value="0"> Option A</label><br><label><input type="radio" name="q16" value="1"> Option B</label><br><label><input type="radio" name="q16" value="2"> Option C</label><br><label><input type="radio" name="q16" value="3"> Option D</label><br><p id="feedback16"></p></div><div class="question"><p><strong>Q18. Sample Question 18: What does XYZ mean in ServiceNow?</strong></p><label><input type="radio" name="q17" value="0"> Option A</label><br><label><input type="radio" name="q17" value="1"> Option B</label><br><label><input type="radio" name="q17" value="2"> Option C</label><br><label><input type="radio" name="q17" value="3"> Option D</label><br><p id="feedback17"></p></div><div class="question"><p><strong>Q19. Sample Question 19: What does XYZ mean in ServiceNow?</strong></p><label><input type="radio" name="q18" value="0"> Option A</label><br><label><input type="radio" name="q18" value="1"> Option B</label><br><label><input type="radio" name="q18" value="2"> Option C</label><br><label><input type="radio" name="q18" value="3"> Option D</label><br><p id="feedback18"></p></div><div class="question"><p><strong>Q20. Sample Question 20: What does XYZ mean in ServiceNow?</strong></p><label><input type="radio" name="q19" value="0"> Option A</label><br><label><input type="radio" name="q19" value="1"> Option B</label><br><label><input type="radio" name="q19" value="2"> Option C</label><br><label><input type="radio" name="q19" value="3"> Option D</label><br><p id="feedback19"></p></div><div class="question"><p><strong>Q21. Sample Question 21: What does XYZ mean in ServiceNow?</strong></p><label><input type="radio" name="q20" value="0"> Option A</label><br><label><input type="radio" name="q20" value="1"> Option B</label><br><label><input type="radio" name="q20" value="2"> Option C</label><br><label><input type="radio" name="q20" value="3"> Option D</label><br><p id="feedback20"></p></div><div class="question"><p><strong>Q22. Sample Question 22: What does XYZ mean in ServiceNow?</strong></p><label><input type="radio" name="q21" value="0"> Option A</label><br><label><input type="radio" name="q21" value="1"> Option B</label><br><label><input type="radio" name="q21" value="2"> Option C</label><br><label><input type="radio" name="q21" value="3"> Option D</label><br><p id="feedback21"></p></div><div class="question"><p><strong>Q23. Sample Question 23: What does XYZ mean in ServiceNow?</strong></p><label><input type="radio" name="q22" value="0"> Option A</label><br><label><input type="radio" name="q22" value="1"> Option B</label><br><label><input type="radio" name="q22" value="2"> Option C</label><br><label><input type="radio" name="q22" value="3"> Option D</label><br><p id="feedback22"></p></div><div class="question"><p><strong>Q24. Sample Question 24: What does XYZ mean in ServiceNow?</strong></p><label><input type="radio" name="q23" value="0"> Option A</label><br><label><input type="radio" name="q23" value="1"> Option B</label><br><label><input type="radio" name="q23" value="2"> Option C</label><br><label><input type="radio" name="q23" value="3"> Option D</label><br><p id="feedback23"></p></div><div class="question"><p><strong>Q25. Sample Question 25: What does XYZ mean in ServiceNow?</strong></p><label><input type="radio" name="q24" value="0"> Option A</label><br><label><input type="radio" name="q24" value="1"> Option B</label><br><label><input type="radio" name="q24" value="2"> Option C</label><br><label><input type="radio" name="q24" value="3"> Option D</label><br><p id="feedback24"></p></div><div class="question"><p><strong>Q26. Sample Question 26: What does XYZ mean in ServiceNow?</strong></p><label><input type="radio" name="q25" value="0"> Option A</label><br><label><input type="radio" name="q25" value="1"> Option B</label><br><label><input type="radio" name="q25" value="2"> Option C</label><br><label><input type="radio" name="q25" value="3"> Option D</label><br><p id="feedback25"></p></div><div class="question"><p><strong>Q27. Sample Question 27: What does XYZ mean in ServiceNow?</strong></p><label><input type="radio" name="q26" value="0"> Option A</label><br><label><input type="radio" name="q26" value="1"> Option B</label><br><label><input type="radio" name="q26" value="2"> Option C</label><br><label><input type="radio" name="q26" value="3"> Option D</label><br><p id="feedback26"></p></div><div class="question"><p><strong>Q28. Sample Question 28: What does XYZ mean in ServiceNow?</strong></p><label><input type="radio" name="q27" value="0"> Option A</label><br><label><input type="radio" name="q27" value="1"> Option B</label><br><label><input type="radio" name="q27" value="2"> Option C</label><br><label><input type="radio" name="q27" value="3"> Option D</label><br><p id="feedback27"></p></div><div class="question"><p><strong>Q29. Sample Question 29: What does XYZ mean in ServiceNow?</strong></p><label><input type="radio" name="q28" value="0"> Option A</label><br><label><input type="radio" name="q28" value="1"> Option B</label><br><label><input type="radio" name="q28" value="2"> Option C</label><br><label><input type="radio" name="q28" value="3"> Option D</label><br><p id="feedback28"></p></div><div class="question"><p><strong>Q30. Sample Question 30: What does XYZ mean in ServiceNow?</strong></p><label><input type="radio" name="q29" value="0"> Option A</label><br><label><input type="radio" name="q29" value="1"> Option B</label><br><label><input type="radio" name="q29" value="2"> Option C</label><br><label><input type="radio" name="q29" value="3"> Option D</label><br><p id="feedback29"></p></div><div class="question"><p><strong>Q31. Sample Question 31: What does XYZ mean in ServiceNow?</strong></p><label><input type="radio" name="q30" value="0"> Option A</label><br><label><input type="radio" name="q30" value="1"> Option B</label><br><label><input type="radio" name="q30" value="2"> Option C</label><br><label><input type="radio" name="q30" value="3"> Option D</label><br><p id="feedback30"></p></div>
-    <button type="button" onclick="submitQuiz()">Submit Answers</button>
-    </form>
 
-    <script>
-    const answers = [2,2,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];
+  <h1>🧠 ServiceNow CSA - Day 1 Quiz</h1>
+  <p>One-question-at-a-time format. Select an option to see feedback instantly.</p>
 
-    function submitQuiz() {
-        for (let i = 0; i < answers.length; i++) {
-            const radios = document.getElementsByName('q' + i);
-            let selected = -1;
-            for (let r = 0; r < radios.length; r++) {
-                if (radios[r].checked) {
-                    selected = parseInt(radios[r].value);
-                    break;
-                }
-            }
-            const feedback = document.getElementById('feedback' + i);
-            if (selected === answers[i]) {
-                feedback.innerHTML = "✅ Correct!";
-                feedback.className = "correct";
-            } else {
-                feedback.innerHTML = "❌ Incorrect. Correct Answer: " + radios[answers[i]].nextSibling.textContent.trim();
-                feedback.className = "incorrect";
-            }
-        }
+  <div id="quiz"></div>
+
+  <div class="navigation">
+    <button onclick="prevQuestion()">⬅ Previous</button>
+    <button onclick="nextQuestion()">Next ➡</button>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "1. What is the purpose of an update set in ServiceNow?",
+        options: [
+          "To migrate customizations between instances",
+          "To perform system upgrades",
+          "To reset user preferences",
+          "To update UI Policies"
+        ],
+        answer: 0
+      },
+      {
+        question: "2. Which module provides a personalized user experience in the latest ServiceNow versions?",
+        options: [
+          "Classic UI",
+          "Next Experience UI",
+          "UI16",
+          "Now Experience Workspace"
+        ],
+        answer: 1
+      },
+      {
+        question: "3. What is the function of the 'Application Navigator'?",
+        options: [
+          "To configure applications",
+          "To search and access modules",
+          "To monitor performance",
+          "To manage user roles"
+        ],
+        answer: 1
+      },
+      {
+        question: "4. Which role is required to customize system settings and access all features in ServiceNow?",
+        options: [
+          "itil",
+          "user_admin",
+          "admin",
+          "developer"
+        ],
+        answer: 2
+      },
+      {
+        question: "5. What does the 'Impersonate User' feature allow an admin to do?",
+        options: [
+          "Log in as a system admin",
+          "Change another user's password",
+          "Access another user’s view without logging in as them",
+          "Reset the user’s settings"
+        ],
+        answer: 2
+      },
+      {
+        question: "6. Where can you create or edit a table in ServiceNow?",
+        options: [
+          "Service Catalog",
+          "Studio",
+          "Flow Designer",
+          "List Layout"
+        ],
+        answer: 1
+      },
+      {
+        question: "7. What happens when a table is extended in ServiceNow?",
+        options: [
+          "It loses all data",
+          "It inherits fields and functionality from the parent table",
+          "It merges with the parent table",
+          "It becomes read-only"
+        ],
+        answer: 1
+      },
+      {
+        question: "8. What is the primary purpose of the Form Designer?",
+        options: [
+          "Create tables",
+          "Build flows",
+          "Design user interfaces for forms",
+          "Configure UI Policies"
+        ],
+        answer: 2
+      },
+      {
+        question: "9. What is a Dictionary Entry in ServiceNow?",
+        options: [
+          "A glossary of terms",
+          "Field-level metadata for a table",
+          "A data dictionary plugin",
+          "An API reference list"
+        ],
+        answer: 1
+      },
+      {
+        question: "10. Which field type creates a relationship between two tables?",
+        options: [
+          "String",
+          "Reference",
+          "Boolean",
+          "Date/Time"
+        ],
+        answer: 1
+      },
+      {
+        question: "11. Which ServiceNow module allows automating repetitive tasks without scripting?",
+        options: [
+          "Business Rules",
+          "Flow Designer",
+          "Script Includes",
+          "Client Scripts"
+        ],
+        answer: 1
+      },
+      {
+        question: "12. What is a 'Scoped Application'?",
+        options: [
+          "A module visible to only admins",
+          "An app limited to one user",
+          "An app developed and managed separately within its namespace",
+          "A default app provided by ServiceNow"
+        ],
+        answer: 2
+      },
+      {
+        question: "13. What is a Business Rule in ServiceNow?",
+        options: [
+          "UI customization tool",
+          "Client-side logic",
+          "Server-side logic that runs when records are inserted, updated, or deleted",
+          "Catalog item configuration"
+        ],
+        answer: 2
+      },
+      {
+        question: "14. Where are Client Scripts executed?",
+        options: [
+          "Server",
+          "Client browser",
+          "Middleware",
+          "Background processor"
+        ],
+        answer: 1
+      },
+      {
+        question: "15. What is the purpose of Access Control Rules (ACLs)?",
+        options: [
+          "Automate tasks",
+          "Track SLA breaches",
+          "Control data access and visibility",
+          "Add fields to tables"
+        ],
+        answer: 2
+      },
+      {
+        question: "16. What does a Reference Qualifier do?",
+        options: [
+          "Limits reference field options",
+          "Applies security roles",
+          "Triggers notifications",
+          "Runs onSubmit scripts"
+        ],
+        answer: 0
+      },
+      {
+        question: "17. What are UI Policies used for?",
+        options: [
+          "Change field behavior on forms",
+          "Trigger background scripts",
+          "Create records",
+          "Assign roles"
+        ],
+        answer: 0
+      },
+      {
+        question: "18. Which module tracks outages and incidents for services?",
+        options: [
+          "Service Catalog",
+          "Incident Management",
+          "Service Portfolio",
+          "Problem Management"
+        ],
+        answer: 1
+      },
+      {
+        question: "19. Which table stores incident records by default?",
+        options: [
+          "incident_log",
+          "task",
+          "incident",
+          "problem"
+        ],
+        answer: 2
+      },
+      {
+        question: "20. Which method is used in a script to get the value of a GlideRecord field?",
+        options: [
+          "gr.fieldValue()",
+          "gr.getFieldValue()",
+          "gr.getValue('field')",
+          "gr.read('field')"
+        ],
+        answer: 2
+      },
+      {
+        question: "21. What is the 'Task' table used for in ServiceNow?",
+        options: [
+          "To store scheduled jobs",
+          "To store background scripts",
+          "To serve as a parent table for task-based processes",
+          "To define catalog variables"
+        ],
+        answer: 2
+      },
+      {
+        question: "22. What is the main function of the Service Catalog?",
+        options: [
+          "To track service outages",
+          "To define workflows",
+          "To allow users to request goods and services",
+          "To create ACLs"
+        ],
+        answer: 2
+      },
+      {
+        question: "23. What does SLA stand for?",
+        options: [
+          "System Level Access",
+          "Service Line Agreement",
+          "Service Level Agreement",
+          "Support Level Access"
+        ],
+        answer: 2
+      },
+      {
+        question: "24. Which record type defines the stages and transitions in a process?",
+        options: [
+          "Business Rule",
+          "Flow Designer",
+          "Workflow",
+          "State Model"
+        ],
+        answer: 3
+      },
+      {
+        question: "25. How can a developer debug a script in ServiceNow?",
+        options: [
+          "By using UI Policy logs",
+          "By enabling debug logs and using gs.info",
+          "By restarting the instance",
+          "By deleting cache"
+        ],
+        answer: 1
+      },
+      {
+        question: "26. What does the GlideRecord class do?",
+        options: [
+          "Stores user preferences",
+          "Connects to remote databases",
+          "Interacts with ServiceNow tables",
+          "Schedules workflows"
+        ],
+        answer: 2
+      },
+      {
+        question: "27. What does the Coalesce field do in a Transform Map?",
+        options: [
+          "Prevents duplicate updates",
+          "Creates new fields",
+          "Deletes duplicates",
+          "Indicates import status"
+        ],
+        answer: 0
+      },
+      {
+        question: "28. Which report type displays data graphically as bars?",
+        options: [
+          "Pie Chart",
+          "Line Chart",
+          "Bar Chart",
+          "List"
+        ],
+        answer: 2
+      },
+      {
+        question: "29. What is a UI Action used for?",
+        options: [
+          "Restrict access to records",
+          "Add a button or link to perform actions",
+          "Create reports",
+          "Define business logic"
+        ],
+        answer: 1
+      },
+      {
+        question: "30. What is the role of the Configuration Management Database (CMDB)?",
+        options: [
+          "Manage access control",
+          "Store incident records",
+          "Store information about Configuration Items (CIs)",
+          "Log business rules"
+        ],
+        answer: 2
+      }
+    ];
+
+    const quizDiv = document.getElementById("quiz");
+
+    questions.forEach((q, i) => {
+      const container = document.createElement("div");
+      container.className = "question-container";
+      if (i === 0) container.classList.add("active");
+
+      const qElem = document.createElement("div");
+      qElem.className = "question";
+      qElem.innerText = q.question;
+
+      const optsDiv = document.createElement("div");
+      optsDiv.className = "options";
+      q.options.forEach((opt, idx) => {
+        const label = document.createElement("label");
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = `q${i}`;
+        input.value = idx;
+        input.onclick = () => checkAnswer(i, idx);
+        label.appendChild(input);
+        label.append(" " + opt);
+        optsDiv.appendChild(label);
+      });
+
+      const feedback = document.createElement("div");
+      feedback.className = "feedback";
+      feedback.id = `feedback${i}`;
+
+      container.appendChild(qElem);
+      container.appendChild(optsDiv);
+      container.appendChild(feedback);
+      quizDiv.appendChild(container);
+    });
+
+    let currentIndex = 0;
+
+    function showQuestion(index) {
+      document.querySelectorAll('.question-container').forEach((div, i) => {
+        div.classList.toggle('active', i === index);
+      });
     }
-    </script>
+
+    function nextQuestion() {
+      if (currentIndex < questions.length - 1) {
+        currentIndex++;
+        showQuestion(currentIndex);
+      }
+    }
+
+    function prevQuestion() {
+      if (currentIndex > 0) {
+        currentIndex--;
+        showQuestion(currentIndex);
+      }
+    }
+
+    function checkAnswer(qIndex, selected) {
+      const feedback = document.getElementById(`feedback${qIndex}`);
+      if (selected === questions[qIndex].answer) {
+        feedback.innerText = "✅ Correct!";
+        feedback.className = "feedback correct";
+      } else {
+        feedback.innerText = `❌ Incorrect. Correct answer: ${questions[qIndex].options[questions[qIndex].answer]}`;
+        feedback.className = "feedback incorrect";
+      }
+    }
+  </script>
 </body>
 </html>
