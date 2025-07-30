@@ -30,4 +30,4 @@ Each domain is proportionally divided into days for focused learning.
 
 ## 📁 Folder Structure
 
-``` servicenow-csa-30day-masterplan/ ├── DAY-01/ │ ├── deep-dive.md │ ├── scenario-questions.md │ ├── hands-on-tasks.md │ └── quiz.md ├── DAY-02/ │ └── ... ├── quizzes/ │ ├── day01-quiz.html │ └── day02-quiz.html ├── assets/ │ └── screenshots, diagrams, workflows └── README.md ```
+<pre> ```text servicenow-csa-30day-masterplan/ ├── DAY-01/ │ ├── deep-dive.md │ ├── scenario-questions.md │ ├── hands-on-tasks.md │ └── quiz.md ├── DAY-02/ │ └── ... ├── quizzes/ │ ├── day01-quiz.html │ └── day02-quiz.html ├── assets/ │ └── screenshots, diagrams, workflows └── README.md ``` </pre>
