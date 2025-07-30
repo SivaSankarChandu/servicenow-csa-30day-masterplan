@@ -1,434 +1,256 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Day 1 CSA Quiz - One by One</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Day 01 - Platform Overview & Navigation Quiz</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f4f7f9;
       padding: 20px;
-      max-width: 800px;
-      margin: auto;
-    }
-    .question-container {
-      display: none;
-      margin-bottom: 30px;
-    }
-    .question-container.active {
-      display: block;
+      background-color: #f8f9fa;
     }
     .question {
-      font-weight: bold;
+      display: none;
+      background-color: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .question.active {
+      display: block;
     }
     .options label {
       display: block;
-      margin: 8px 0;
+      margin-bottom: 10px;
       cursor: pointer;
-    }
-    .feedback {
-      margin-top: 10px;
-      font-weight: bold;
-    }
-    .correct {
-      color: green;
-    }
-    .incorrect {
-      color: red;
     }
     .navigation {
       margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
     }
     button {
-      padding: 8px 16px;
-      margin: 0 4px;
+      padding: 10px 15px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+    }
+    .prev-btn {
+      background-color: #6c757d;
+      color: white;
+    }
+    .next-btn {
+      background-color: #007bff;
+      color: white;
+    }
+    .answer {
+      margin-top: 10px;
+      display: none;
+      color: green;
     }
   </style>
 </head>
 <body>
 
-  <h1>🧠 ServiceNow CSA - Day 1 Quiz</h1>
-  <p>One-question-at-a-time format. Select an option to see feedback instantly.</p>
+<h1>Day 01 Quiz: Platform Overview & Navigation</h1>
 
-  <div id="quiz"></div>
+<div id="quiz-container"></div>
 
-  <div class="navigation">
-    <button onclick="prevQuestion()">⬅ Previous</button>
-    <button onclick="nextQuestion()">Next ➡</button>
-  </div>
+<div class="navigation">
+  <button class="prev-btn" onclick="prevQuestion()">Previous</button>
+  <button class="next-btn" onclick="nextQuestion()">Next</button>
+</div>
 
-  <script>
-    const questions = [
-      {
-        question: "1. What is the purpose of an update set in ServiceNow?",
-        options: [
-          "To migrate customizations between instances",
-          "To perform system upgrades",
-          "To reset user preferences",
-          "To update UI Policies"
-        ],
-        answer: 0
-      },
-      {
-        question: "2. Which module provides a personalized user experience in the latest ServiceNow versions?",
-        options: [
-          "Classic UI",
-          "Next Experience UI",
-          "UI16",
-          "Now Experience Workspace"
-        ],
-        answer: 1
-      },
-      {
-        question: "3. What is the function of the 'Application Navigator'?",
-        options: [
-          "To configure applications",
-          "To search and access modules",
-          "To monitor performance",
-          "To manage user roles"
-        ],
-        answer: 1
-      },
-      {
-        question: "4. Which role is required to customize system settings and access all features in ServiceNow?",
-        options: [
-          "itil",
-          "user_admin",
-          "admin",
-          "developer"
-        ],
-        answer: 2
-      },
-      {
-        question: "5. What does the 'Impersonate User' feature allow an admin to do?",
-        options: [
-          "Log in as a system admin",
-          "Change another user's password",
-          "Access another user’s view without logging in as them",
-          "Reset the user’s settings"
-        ],
-        answer: 2
-      },
-      {
-        question: "6. Where can you create or edit a table in ServiceNow?",
-        options: [
-          "Service Catalog",
-          "Studio",
-          "Flow Designer",
-          "List Layout"
-        ],
-        answer: 1
-      },
-      {
-        question: "7. What happens when a table is extended in ServiceNow?",
-        options: [
-          "It loses all data",
-          "It inherits fields and functionality from the parent table",
-          "It merges with the parent table",
-          "It becomes read-only"
-        ],
-        answer: 1
-      },
-      {
-        question: "8. What is the primary purpose of the Form Designer?",
-        options: [
-          "Create tables",
-          "Build flows",
-          "Design user interfaces for forms",
-          "Configure UI Policies"
-        ],
-        answer: 2
-      },
-      {
-        question: "9. What is a Dictionary Entry in ServiceNow?",
-        options: [
-          "A glossary of terms",
-          "Field-level metadata for a table",
-          "A data dictionary plugin",
-          "An API reference list"
-        ],
-        answer: 1
-      },
-      {
-        question: "10. Which field type creates a relationship between two tables?",
-        options: [
-          "String",
-          "Reference",
-          "Boolean",
-          "Date/Time"
-        ],
-        answer: 1
-      },
-      {
-        question: "11. Which ServiceNow module allows automating repetitive tasks without scripting?",
-        options: [
-          "Business Rules",
-          "Flow Designer",
-          "Script Includes",
-          "Client Scripts"
-        ],
-        answer: 1
-      },
-      {
-        question: "12. What is a 'Scoped Application'?",
-        options: [
-          "A module visible to only admins",
-          "An app limited to one user",
-          "An app developed and managed separately within its namespace",
-          "A default app provided by ServiceNow"
-        ],
-        answer: 2
-      },
-      {
-        question: "13. What is a Business Rule in ServiceNow?",
-        options: [
-          "UI customization tool",
-          "Client-side logic",
-          "Server-side logic that runs when records are inserted, updated, or deleted",
-          "Catalog item configuration"
-        ],
-        answer: 2
-      },
-      {
-        question: "14. Where are Client Scripts executed?",
-        options: [
-          "Server",
-          "Client browser",
-          "Middleware",
-          "Background processor"
-        ],
-        answer: 1
-      },
-      {
-        question: "15. What is the purpose of Access Control Rules (ACLs)?",
-        options: [
-          "Automate tasks",
-          "Track SLA breaches",
-          "Control data access and visibility",
-          "Add fields to tables"
-        ],
-        answer: 2
-      },
-      {
-        question: "16. What does a Reference Qualifier do?",
-        options: [
-          "Limits reference field options",
-          "Applies security roles",
-          "Triggers notifications",
-          "Runs onSubmit scripts"
-        ],
-        answer: 0
-      },
-      {
-        question: "17. What are UI Policies used for?",
-        options: [
-          "Change field behavior on forms",
-          "Trigger background scripts",
-          "Create records",
-          "Assign roles"
-        ],
-        answer: 0
-      },
-      {
-        question: "18. Which module tracks outages and incidents for services?",
-        options: [
-          "Service Catalog",
-          "Incident Management",
-          "Service Portfolio",
-          "Problem Management"
-        ],
-        answer: 1
-      },
-      {
-        question: "19. Which table stores incident records by default?",
-        options: [
-          "incident_log",
-          "task",
-          "incident",
-          "problem"
-        ],
-        answer: 2
-      },
-      {
-        question: "20. Which method is used in a script to get the value of a GlideRecord field?",
-        options: [
-          "gr.fieldValue()",
-          "gr.getFieldValue()",
-          "gr.getValue('field')",
-          "gr.read('field')"
-        ],
-        answer: 2
-      },
-      {
-        question: "21. What is the 'Task' table used for in ServiceNow?",
-        options: [
-          "To store scheduled jobs",
-          "To store background scripts",
-          "To serve as a parent table for task-based processes",
-          "To define catalog variables"
-        ],
-        answer: 2
-      },
-      {
-        question: "22. What is the main function of the Service Catalog?",
-        options: [
-          "To track service outages",
-          "To define workflows",
-          "To allow users to request goods and services",
-          "To create ACLs"
-        ],
-        answer: 2
-      },
-      {
-        question: "23. What does SLA stand for?",
-        options: [
-          "System Level Access",
-          "Service Line Agreement",
-          "Service Level Agreement",
-          "Support Level Access"
-        ],
-        answer: 2
-      },
-      {
-        question: "24. Which record type defines the stages and transitions in a process?",
-        options: [
-          "Business Rule",
-          "Flow Designer",
-          "Workflow",
-          "State Model"
-        ],
-        answer: 3
-      },
-      {
-        question: "25. How can a developer debug a script in ServiceNow?",
-        options: [
-          "By using UI Policy logs",
-          "By enabling debug logs and using gs.info",
-          "By restarting the instance",
-          "By deleting cache"
-        ],
-        answer: 1
-      },
-      {
-        question: "26. What does the GlideRecord class do?",
-        options: [
-          "Stores user preferences",
-          "Connects to remote databases",
-          "Interacts with ServiceNow tables",
-          "Schedules workflows"
-        ],
-        answer: 2
-      },
-      {
-        question: "27. What does the Coalesce field do in a Transform Map?",
-        options: [
-          "Prevents duplicate updates",
-          "Creates new fields",
-          "Deletes duplicates",
-          "Indicates import status"
-        ],
-        answer: 0
-      },
-      {
-        question: "28. Which report type displays data graphically as bars?",
-        options: [
-          "Pie Chart",
-          "Line Chart",
-          "Bar Chart",
-          "List"
-        ],
-        answer: 2
-      },
-      {
-        question: "29. What is a UI Action used for?",
-        options: [
-          "Restrict access to records",
-          "Add a button or link to perform actions",
-          "Create reports",
-          "Define business logic"
-        ],
-        answer: 1
-      },
-      {
-        question: "30. What is the role of the Configuration Management Database (CMDB)?",
-        options: [
-          "Manage access control",
-          "Store incident records",
-          "Store information about Configuration Items (CIs)",
-          "Log business rules"
-        ],
-        answer: 2
-      }
-    ];
-
-    const quizDiv = document.getElementById("quiz");
-
-    questions.forEach((q, i) => {
-      const container = document.createElement("div");
-      container.className = "question-container";
-      if (i === 0) container.classList.add("active");
-
-      const qElem = document.createElement("div");
-      qElem.className = "question";
-      qElem.innerText = q.question;
-
-      const optsDiv = document.createElement("div");
-      optsDiv.className = "options";
-      q.options.forEach((opt, idx) => {
-        const label = document.createElement("label");
-        const input = document.createElement("input");
-        input.type = "radio";
-        input.name = `q${i}`;
-        input.value = idx;
-        input.onclick = () => checkAnswer(i, idx);
-        label.appendChild(input);
-        label.append(" " + opt);
-        optsDiv.appendChild(label);
-      });
-
-      const feedback = document.createElement("div");
-      feedback.className = "feedback";
-      feedback.id = `feedback${i}`;
-
-      container.appendChild(qElem);
-      container.appendChild(optsDiv);
-      container.appendChild(feedback);
-      quizDiv.appendChild(container);
-    });
-
-    let currentIndex = 0;
-
-    function showQuestion(index) {
-      document.querySelectorAll('.question-container').forEach((div, i) => {
-        div.classList.toggle('active', i === index);
-      });
+<script>
+  const questions = [
+    {
+      q: "What is the primary purpose of the ServiceNow Platform?",
+      options: ["Email service automation", "Customer relationship management", "Digital workflow automation", "Hardware maintenance"],
+      answer: 2
+    },
+    {
+      q: "Which UI component provides users quick access to applications and modules?",
+      options: ["Sidebar", "App Navigator", "Banner Frame", "Form Layout"],
+      answer: 1
+    },
+    {
+      q: "In which module can you view and manage active user sessions?",
+      options: ["System Logs > Events", "User Administration > Active Sessions", "System Diagnostics > Sessions", "System Security > Sessions"],
+      answer: 1
+    },
+    {
+      q: "Which navigation type is introduced in the Next Experience UI?",
+      options: ["Legacy List View", "Classic UI Navigation", "Unified Navigation", "Simple Tabs"],
+      answer: 2
+    },
+    {
+      q: "What is a scoped application?",
+      options: ["An application with limited features", "A ServiceNow update set", "An application with a unique namespace to avoid conflicts", "A free plugin"],
+      answer: 2
+    },
+    {
+      q: "Which of the following are components of the ServiceNow interface?",
+      options: ["Application Navigator", "Content Frame", "Banner Frame", "All of the above"],
+      answer: 3
+    },
+    {
+      q: "Where do you access your user preferences like theme, timezone, and notifications?",
+      options: ["Profile > Preferences", "System Settings", "Banner Menu > Preferences", "App Settings"],
+      answer: 1
+    },
+    {
+      q: "Which search option searches across all applications, tables, and modules?",
+      options: ["Global Search", "List Search", "Application Navigator", "Form Search"],
+      answer: 0
+    },
+    {
+      q: "What is the homepage used for in ServiceNow?",
+      options: ["To create user roles", "To configure servers", "To present key performance indicators and widgets", "To develop scripts"],
+      answer: 2
+    },
+    {
+      q: "What do you call the top-level navigation element in the Next Experience UI?",
+      options: ["Page Header", "Shell Header", "Navigation Bar", "Theme Controller"],
+      answer: 1
+    },
+    {
+      q: "How do users typically access ServiceNow?",
+      options: ["Via a mobile app only", "SSH session", "Web browser", "Windows application"],
+      answer: 2
+    },
+    {
+      q: "Which role is required to install plugins in ServiceNow?",
+      options: ["itil", "admin", "catalog_admin", "plugin_user"],
+      answer: 1
+    },
+    {
+      q: "The Activity Stream can be accessed from which area in a form?",
+      options: ["Form header", "Related Links", "Form context menu", "Stream icon"],
+      answer: 3
+    },
+    {
+      q: "What is the name of the menu where users access Help, Settings, and Logout?",
+      options: ["Banner Menu", "Action Menu", "User Menu", "Help Menu"],
+      answer: 2
+    },
+    {
+      q: "Which type of menu item in the Application Navigator links to a list of records?",
+      options: ["Module", "Table", "Record", "Role"],
+      answer: 0
+    },
+    {
+      q: "What does the star icon represent in the application navigator?",
+      options: ["Important Modules", "New Modules", "Favorites", "Recently Accessed"],
+      answer: 2
+    },
+    {
+      q: "How do you personalize your landing page in Next Experience UI?",
+      options: ["Edit Homepage Widget", "Workspace Selector", "Preferences > Landing Page", "Update Sets"],
+      answer: 1
+    },
+    {
+      q: "Which of the following is a benefit of using the Next Experience UI?",
+      options: ["Faster server performance", "Classic theme availability", "Improved navigation and consistency", "No need for scripting"],
+      answer: 2
+    },
+    {
+      q: "What is the purpose of the "Filter Navigator"?",
+      options: ["To search for records", "To apply ACLs", "To find applications and modules", "To limit plugin usage"],
+      answer: 2
+    },
+    {
+      q: "Which of these best describes the banner frame?",
+      options: ["The left navigation pane", "The area displaying records", "The top frame with user controls and branding", "The footer of the platform"],
+      answer: 2
+    },
+    {
+      q: "Which role is required to impersonate a user?",
+      options: ["itil", "admin", "user_admin", "impersonator"],
+      answer: 1
+    },
+    {
+      q: "Which UI component displays a list of modules under an application?",
+      options: ["Application Menu", "Form Context Menu", "System Settings", "Dashboard"],
+      answer: 0
+    },
+    {
+      q: "Where can users see their own tasks assigned in the system?",
+      options: ["Self-Service > My Tasks", "Incident > Assigned to Me", "My Work", "All of the above"],
+      answer: 3
+    },
+    {
+      q: "Which key combination brings up the Global Search from anywhere?",
+      options: ["Shift + G", "Ctrl + G", "Ctrl + Alt + F", "None, it's always visible"],
+      answer: 3
+    },
+    {
+      q: "What does impersonating a user help you with?",
+      options: ["Debugging a user's access and UI experience", "Modifying ACLs", "Viewing the Service Catalog", "Accessing Global Update Sets"],
+      answer: 0
+    },
+    {
+      q: "Which plugin provides UI enhancements and new navigation layouts?",
+      options: ["Performance Analytics", "Virtual Agent", "Next Experience UI", "Field Service Management"],
+      answer: 2
+    },
+    {
+      q: "Which feature allows navigating multiple instances or views of ServiceNow?",
+      options: ["Tabbed Browsing", "Shell Header Switcher", "App Navigator", "Multi-UI View"],
+      answer: 1
+    },
+    {
+      q: "How do you quickly locate a module within a large application menu?",
+      options: ["Collapse All", "Use Search in Filter Navigator", "Use Form Context Menu", "Reload Navigation"],
+      answer: 1
+    },
+    {
+      q: "Which section displays widgets and reports on the homepage?",
+      options: ["Content Frame", "Banner Frame", "Dashboard", "App Menu"],
+      answer: 2
+    },
+    {
+      q: "Which of the following best describes the Content Frame?",
+      options: ["Where applications are searched", "Top of the screen", "Displays forms and lists", "Used for notifications only"],
+      answer: 2
     }
+  ];
 
-    function nextQuestion() {
-      if (currentIndex < questions.length - 1) {
-        currentIndex++;
-        showQuestion(currentIndex);
-      }
-    }
+  let currentQuestion = 0;
+  const container = document.getElementById("quiz-container");
 
-    function prevQuestion() {
-      if (currentIndex > 0) {
-        currentIndex--;
-        showQuestion(currentIndex);
-      }
-    }
+  function loadQuestion(index) {
+    container.innerHTML = "";
+    const q = questions[index];
+    const div = document.createElement("div");
+    div.className = "question active";
+    div.innerHTML = `<h3>Q${index + 1}. ${q.q}</h3>
+      <div class="options">
+        ${q.options.map((opt, i) => `<label><input type='radio' name='q${index}' value='${i}'> ${opt}</label>`).join("")}
+      </div>
+      <div class="answer" id='answer${index}'>✅ Correct Answer: ${q.options[q.answer]}</div>
+      <button onclick='document.getElementById("answer${index}").style.display="block"'>Check Answer</button>`;
+    container.appendChild(div);
+  }
 
-    function checkAnswer(qIndex, selected) {
-      const feedback = document.getElementById(`feedback${qIndex}`);
-      if (selected === questions[qIndex].answer) {
-        feedback.innerText = "✅ Correct!";
-        feedback.className = "feedback correct";
-      } else {
-        feedback.innerText = `❌ Incorrect. Correct answer: ${questions[qIndex].options[questions[qIndex].answer]}`;
-        feedback.className = "feedback incorrect";
-      }
+  function nextQuestion() {
+    if (currentQuestion < questions.length - 1) {
+      currentQuestion++;
+      loadQuestion(currentQuestion);
     }
-  </script>
+  }
+
+  function prevQuestion() {
+    if (currentQuestion > 0) {
+      currentQuestion--;
+      loadQuestion(currentQuestion);
+    }
+  }
+
+  loadQuestion(currentQuestion);
+</script>
+
 </body>
 </html>
