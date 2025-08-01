@@ -1,212 +1,256 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Day 01 Quiz: Platform Overview & Navigation</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Day 01 - Platform Overview & Navigation Quiz</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f8f9fa;
-      margin: 0;
-      padding: 2rem;
+      padding: 20px;
+      background-color: #f8f9fa;
     }
-    h1 {
-      color: #222;
+    .question {
+      display: none;
+      background-color: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin-bottom: 20px;
     }
-    .question-card {
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      padding: 1.5rem;
-      margin-top: 1rem;
+    .question.active {
+      display: block;
     }
     .options label {
       display: block;
-      margin: 0.5rem 0;
-    }
-    .navigation {
-      margin-top: 1.5rem;
-    }
-    button {
-      padding: 0.5rem 1.2rem;
-      margin-right: 10px;
-      border: none;
-      border-radius: 5px;
-      background: #007bff;
-      color: white;
+      margin-bottom: 10px;
       cursor: pointer;
     }
-    button:disabled {
-      background: #ccc;
-      cursor: not-allowed;
+    .navigation {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+    }
+    button {
+      padding: 10px 15px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+    }
+    .prev-btn {
+      background-color: #6c757d;
+      color: white;
+    }
+    .next-btn {
+      background-color: #007bff;
+      color: white;
+    }
+    .answer {
+      margin-top: 10px;
+      display: none;
+      color: green;
     }
   </style>
 </head>
 <body>
-  <h1>Day 01 Quiz: Platform Overview & Navigation</h1>
-  <div class="question-card" id="questionCard"></div>
-  <div class="navigation">
-    <button onclick="prevQuestion()" id="prevBtn">Previous</button>
-    <button onclick="nextQuestion()" id="nextBtn">Next</button>
-  </div>
 
-  <script>
-    const questions = [
-      {
-        question: "Which module provides access to applications and modules in ServiceNow?",
-        options: ["Application Navigator", "Banner Frame", "Content Frame", "List Layout"],
-      },
-      {
-        question: "What is the purpose of the filter navigator?",
-        options: ["To find applications and modules quickly", "To filter records in a list", "To customize a form", "To create new tables"],
-      },
-      {
-        question: "Which component displays the logo, user info, and global search?",
-        options: ["Application Navigator", "Content Frame", "Banner Frame", "List Header"],
-      },
-      // 🔁 Add questions 4 to 30 here (see below)
-      {
-        question: "Which UI component shows the list of records from a table?",
-        options: ["Form", "List", "Dictionary", "Module"],
-      },
-      {
-        question: "What does clicking the star icon beside a module do?",
-        options: ["Marks it as favorite", "Deletes the module", "Sends feedback", "Creates a report"],
-      },
-      {
-        question: "What is the Global Search used for?",
-        options: ["Searching in current form", "Finding update sets", "Searching across ServiceNow instance", "Locating roles only"],
-      },
-      {
-        question: "What happens when you collapse the Application Navigator?",
-        options: ["You see the list view", "You gain more space in content frame", "It logs you out", "It switches theme"],
-      },
-      {
-        question: "What is the role of the Content Frame?",
-        options: ["Displays applications", "Displays modules", "Displays records or UI", "Displays system logs"],
-      },
-      {
-        question: "Where is the User Menu located?",
-        options: ["Top left", "Bottom left", "Top right", "Bottom right"],
-      },
-      {
-        question: "Which option allows you to personalize your theme and layout?",
-        options: ["System Properties", "Preferences", "Update Set", "Workflow Editor"],
-      },
-      {
-        question: "Which of the following lets you impersonate another user?",
-        options: ["System Logs", "Global Search", "User Menu", "List Actions"],
-      },
-      {
-        question: "Which layout is used to view a single record?",
-        options: ["List", "Module", "Form", "Dashboard"],
-      },
-      {
-        question: "Which option provides UI access to create incidents?",
-        options: ["Incident Module", "Global Search", "System Logs", "Knowledge Base"],
-      },
-      {
-        question: "What is the function of the gear icon in the top-right?",
-        options: ["Open preferences", "Switch update sets", "Change UI policy", "Log out"],
-      },
-      {
-        question: "What is a module in ServiceNow?",
-        options: ["A page or function within an application", "A CSS theme", "A scripting engine", "A user group"],
-      },
-      {
-        question: "What is the default homepage in ServiceNow called?",
-        options: ["Now Dashboard", "UI View", "Service Portal", "Landing Page"],
-      },
-      {
-        question: "Which feature allows users to favorite frequently used items?",
-        options: ["Pinned Views", "Starred Items", "Shortcut Panel", "Service Links"],
-      },
-      {
-        question: "What happens when you type in the filter navigator?",
-        options: ["It updates global search", "It filters navigation modules in real time", "It adds new records", "It restarts the instance"],
-      },
-      {
-        question: "Which tab would a system admin use to view incident module?",
-        options: ["Platform", "Incident Application", "Application Navigator", "User Menu"],
-      },
-      {
-        question: "Where can you find the Logout option?",
-        options: ["Under User Menu", "In Application Navigator", "In the List Header", "In Content Frame"],
-      },
-      {
-        question: "Which ServiceNow version UI is also called Polaris UI?",
-        options: ["UI15", "UI16", "Next Experience", "Classic UI"],
-      },
-      {
-        question: "What does the magnifying glass icon denote in input fields?",
-        options: ["Search", "Reference lookup", "Attachment", "Filter"],
-      },
-      {
-        question: "What is the maximum number of favorites a user can save?",
-        options: ["5", "10", "Unlimited", "Depends on instance settings"],
-      },
-      {
-        question: "How can a user access their profile preferences?",
-        options: ["Through Application Navigator", "By clicking their avatar", "Using Filter Navigator", "Only via Admin"],
-      },
-      {
-        question: "Which UI element helps organize applications in a collapsible list?",
-        options: ["List", "Navigator", "Accordion", "Frame"],
-      },
-      {
-        question: "What does the Application Navigator show?",
-        options: ["All users", "Active records", "Available apps & modules", "Workflows"],
-      },
-      {
-        question: "What is the keyboard shortcut to open Global Search?",
-        options: ["Ctrl+F", "Shift+S", "Alt+G", "Command+G"],
-      },
-      {
-        question: "Which menu provides the option 'Impersonate User'?",
-        options: ["Application Menu", "System Logs", "User Menu", "List Menu"],
-      },
-      {
-        question: "What is the function of the Content Frame?",
-        options: ["To list users", "To display main content", "To manage roles", "To show update sets"],
-      },
-      {
-        question: "Which UI area contains the favorite items and history?",
-        options: ["Content Frame", "Banner Frame", "Navigator", "Favorites Pane"],
-      }
-    ];
+<h1>Day 01 Quiz: Platform Overview & Navigation</h1>
 
-    let currentQuestion = 0;
+<div id="quiz-container"></div>
 
-    function renderQuestion() {
-      const q = questions[currentQuestion];
-      const questionDiv = document.getElementById("questionCard");
-      questionDiv.innerHTML = `
-        <h2>Question ${currentQuestion + 1} of ${questions.length}</h2>
-        <p>${q.question}</p>
-        <div class="options">
-          ${q.options.map(opt => `<label><input type="radio" name="q${currentQuestion}" /> ${opt}</label>`).join('')}
-        </div>
-      `;
-      document.getElementById("prevBtn").disabled = currentQuestion === 0;
-      document.getElementById("nextBtn").disabled = currentQuestion === questions.length - 1;
+<div class="navigation">
+  <button class="prev-btn" onclick="prevQuestion()">Previous</button>
+  <button class="next-btn" onclick="nextQuestion()">Next</button>
+</div>
+
+<script>
+  const questions = [
+    {
+      q: "You are a new ServiceNow admin and want to change the instance theme color. Where should you go to make this update?",
+      options: ["UI Policy", "System Settings", "Branding Editor", "System Properties"],
+      answer: 2
+    },
+    {
+      q: "Your end-users are confused navigating to different applications. Which platform feature helps them access common apps quickly?",
+      options: ["Service Portal", "Favorites", "Visual Task Board", "Notifications"],
+      answer: 1
+    },
+    {
+      q: "Which of the following best describes the 'Next Experience UI'?",
+      options: ["It's a legacy interface for mobile.", "It's the classic UI used in earlier versions.", "It unifies navigation across experiences.", "It is used only by developers."],
+      answer: 2
+    },
+    {
+      q: "An admin wants to explore all modules available to a specific role. Which menu should they use?",
+      options: ["Application Menu", "Filter Navigator", "Role Editor", "Instance Explorer"],
+      answer: 1
+    },
+    {
+      q: "Which UI element allows users to execute actions such as Create, Save, Delete?",
+      options: ["Banner Frame", "Application Navigator", "Form Buttons", "List Controls"],
+      answer: 2
+    },
+    {
+      q: "Where can users adjust their language, time zone, or theme?",
+      options: ["System Settings (gear icon)", "User Profile", "Application Navigator", "Branding Module"],
+      answer: 0
+    },
+    {
+      q: "You need to access a different ServiceNow instance. Where can you find its URL?",
+      options: ["Branding settings", "System Logs", "Developer Site Dashboard", "Update Sets"],
+      answer: 2
+    },
+    {
+      q: "Which section of the UI provides breadcrumbs to help you navigate back?",
+      options: ["Banner Frame", "Content Frame", "Header Menu", "List Controls"],
+      answer: 0
+    },
+    {
+      q: "You notice the search bar at the top of the left nav panel. What is it called?",
+      options: ["Filter Navigator", "Global Search", "Application Search", "Quick Search"],
+      answer: 0
+    },
+    {
+      q: "Which part of the interface shows the main content like forms or lists?",
+      options: ["Content Frame", "Navigation Pane", "Header Bar", "Workspace Panel"],
+      answer: 0
+    },
+    {
+      q: "A user clicks the star icon next to an application. What does this do?",
+      options: ["Deletes the app from view", "Marks it as a favorite", "Hides the application", "Opens the app in a new tab"],
+      answer: 1
+    },
+    {
+      q: "How can you tell which version of ServiceNow your instance is running?",
+      options: ["System Logs", "Banner Frame", "System Diagnostics > Stats", "Platform Analytics"],
+      answer: 2
+    },
+    {
+      q: "A new admin is confused between ‘Application Navigator’ and ‘Filter Navigator.’ What’s the best explanation?",
+      options: ["They are the same", "Application Navigator lists all modules; Filter Navigator searches them", "Filter Navigator only works in Next UI", "Application Navigator is for developers only"],
+      answer: 1
+    },
+    {
+      q: "You’ve switched from one tab to another in the platform. What ServiceNow feature supports tabbed views?",
+      options: ["Multi-Session Tabs (Next UI)", "Classic UI Lists", "Visual Tabs Engine", "GlideRecord Console"],
+      answer: 0
+    },
+    {
+      q: "What’s the difference between a developer instance and a production instance?",
+      options: ["None; they’re the same", "Dev is used for changes; Prod is live with users", "Prod is less secure than Dev", "Dev cannot use the Next Experience"],
+      answer: 1
+    },
+    {
+      q: "Which feature allows end users to have a simplified interface for accessing services?",
+      options: ["Virtual Agent", "Agent Workspace", "Service Portal", "Studio"],
+      answer: 2
+    },
+    {
+      q: "An admin wants to personalize their homepage layout. Where should they go?",
+      options: ["System Properties", "Form Designer", "Homepage Layout Editor", "System Settings"],
+      answer: 3
+    },
+    {
+      q: "Which of the following does NOT belong in the Platform Overview domain?",
+      options: ["UI Navigation", "Instance Types", "Application Configuration", "Banner Frame"],
+      answer: 2
+    },
+    {
+      q: "You need to quickly return to a recently used module. Which feature helps with this?",
+      options: ["Favorites", "Recent Items", "Search History", "Breadcrumbs"],
+      answer: 1
+    },
+    {
+      q: "The main logo and theme color of the instance were changed. What was most likely used?",
+      options: ["UI Policy", "Branding Editor", "Theme Script", "UI Formatter"],
+      answer: 1
+    },
+    {
+      q: "Where is the gear icon (System Settings) located?",
+      options: ["Bottom left corner", "Top right corner of the instance", "Inside each form", "Under Application Navigator"],
+      answer: 1
+    },
+    {
+      q: "Which tool allows you to preview how branding will look before applying it?",
+      options: ["UI Policy", "Branding Simulator", "Theme Previewer", "Branding Editor"],
+      answer: 3
+    },
+    {
+      q: "Where can you change your landing page view in ServiceNow?",
+      options: ["Studio", "System Settings > Homepage", "Update Sets", "Workflow Editor"],
+      answer: 1
+    },
+    {
+      q: "You are using the classic UI, but your company wants you to migrate to a modern UI. What’s the first step?",
+      options: ["Install a plugin", "Enable Next Experience in System Properties", "Switch user role", "Import a theme"],
+      answer: 1
+    },
+    {
+      q: "You want to monitor the memory usage of your instance. Which utility is best?",
+      options: ["System Logs", "Application Navigator", "Stats.do", "Background Scripts"],
+      answer: 2
+    },
+    {
+      q: "What’s one purpose of the banner frame?",
+      options: ["List filtering", "Global search", "Changing view", "Displaying navigation modules"],
+      answer: 1
+    },
+    {
+      q: "Which of these is NOT a default UI component?",
+      options: ["Application Navigator", "Form Header", "Data Dictionary", "Banner Frame"],
+      answer: 2
+    },
+    {
+      q: "Which of the following best describes a module?",
+      options: ["A complete application", "A single record in a table", "A navigational link to a feature or function", "A field in a form"],
+      answer: 2
+    },
+    {
+      q: "You want to test how different users view the interface. What should you do?",
+      options: ["Change the UI policy", "Switch roles or impersonate", "Use Preview Mode", "Install a demo plugin"],
+      answer: 1
+    },
+    {
+      q: "Which of these actions is most aligned with platform navigation customization?",
+      options: ["Creating Business Rules", "Modifying ACLs", "Setting favorites and themes", "Creating roles"],
+      answer: 2
     }
+  ];
 
-    function nextQuestion() {
-      if (currentQuestion < questions.length - 1) {
-        currentQuestion++;
-        renderQuestion();
-      }
+  let currentQuestion = 0;
+  const container = document.getElementById("quiz-container");
+
+  function loadQuestion(index) {
+    container.innerHTML = "";
+    const q = questions[index];
+    const div = document.createElement("div");
+    div.className = "question active";
+    div.innerHTML = `<h3>Q${index + 1}. ${q.q}</h3>
+      <div class="options">
+        ${q.options.map((opt, i) => `<label><input type='radio' name='q${index}' value='${i}'> ${opt}</label>`).join("")}
+      </div>
+      <div class="answer" id='answer${index}'>✅ Correct Answer: ${q.options[q.answer]}</div>
+      <button onclick='document.getElementById("answer${index}").style.display="block"'>Check Answer</button>`;
+    container.appendChild(div);
+  }
+
+  function nextQuestion() {
+    if (currentQuestion < questions.length - 1) {
+      currentQuestion++;
+      loadQuestion(currentQuestion);
     }
+  }
 
-    function prevQuestion() {
-      if (currentQuestion > 0) {
-        currentQuestion--;
-        renderQuestion();
-      }
+  function prevQuestion() {
+    if (currentQuestion > 0) {
+      currentQuestion--;
+      loadQuestion(currentQuestion);
     }
+  }
 
-    window.onload = renderQuestion;
-  </script>
+  loadQuestion(currentQuestion);
+</script>
+
 </body>
 </html>
