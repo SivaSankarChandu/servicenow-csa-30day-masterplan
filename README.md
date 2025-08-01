@@ -35,8 +35,7 @@ servicenow-csa-30day-masterplan/
 ├── DAY-01/
 │   ├── deep-dive.md
 │   ├── scenario-questions.md
-│   ├── hands-on-tasks.md
-│   └── quiz.md
+│   └── hands-on-tasks.md
 ├── DAY-02/
 │   └── ...
 ├── quizzes/
